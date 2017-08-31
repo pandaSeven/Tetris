@@ -1,4 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>俄罗斯方块--完美注释</title>
+	<style type="text/css">
+        .bgImg{
+        	width: 500px;
+        	height: 620px;
+        	background-image: url(650.png);
+        	background-color: rgba(86,219,218,0.4);
+        	position: relative;
+        	left: 0;
+        	right: 0;
+        	margin: 100px auto;
+        }
+        #score{
+        	display: block;
+        	position: absolute;
+        	right: 45px;
+        	top: 50%;
+        	font-size: 30px;
 
+        }
+        #alls{
+        	display: block;
+        	position: absolute;
+        	right: 35px;
+        	top: 43%;
+        	font-size: 30px;
+        }
+        div>img{
+        	position: absolute;
+        	right: 20px;
+        	top: 27%;
+        }
+	    tbody{
+	    	position: absolute;
+	    	left:115px;
+	    	top: 80px;
+
+	    }
+		#board tr td{ 
+		background-color: #F4A460;
+		width: 25px; 
+		height: 25px; 
+		}
+		.over{
+			font-size: 50px;
+			position: absolute;
+			z-index: 9999;
+			left: 145px;
+			top: 30%;
+			display: none;
+		}
+        .block{
+        	
+        }
+		
+	</style>
+</head>
+<body>
+<div class="bgImg" id="bgImg">
+<img  value="开始" src="center.png"  onclick="begin(this)"><span id="alls">得分：</span><span id="score"> 0</span>
+<p class="over" id="over">游戏结束</p>
+</div>
+<script language="javascript">
+/*动态生成table*/
+window.onload=function(){
+	var div=document.getElementById('bgImg');
+    var str="",
+        a="";
+    for (var k = 0; k < 10; k++) {
+	  	str+='<td></td>'
+	  }
+	for (var i = 0; i <18; i++) {
+       a+='<tr>'+str+'</tr>';   
+	}
+	div.innerHTML+='<table id="board" cellspacing=0 cellpadding=0 border=1 style="border-collapse: collapse;">'+a+'</table>';
+}
 var tbl;//游戏主面板
 var status=0;////游戏状态 0: 未开始;1 运行; 2 中止; 
 var timer;//定时器
@@ -6,8 +85,8 @@ var score = 0; //分数
 //board是一个18*10的数组
 var board= new Array(18);
 for (var i = 0; i <18; i++) {
-	board[i]=new Array(10);
-}
+ 	board[i]=new Array(10);
+ }
  // console.log(board);
  //用来标注那些方格已经被占据. 初始时都为0, 如果被占据则为1
  for (var i = 0; i <18; i++) {
@@ -20,8 +99,8 @@ for (var i = 0; i <18; i++) {
  //定义一个当前活动的方块
  var activeBlock;
  //定义方块的基本形状--7个
- function genBlock(){
- 	activeBlock = new Array(4);
+function genBlock(){
+	activeBlock = new Array(4);
 	//产生随机整数0-6
 	var t= (Math.floor(Math.random()*20)+1)%7;
 	switch(t){ 
@@ -87,7 +166,7 @@ for (var i = 0; i <18; i++) {
 //向下移动
 function moveDown(){
 //首先检查底边界 看有没有触底
-if (checkBottomBorder()) {
+ if (checkBottomBorder()) {
  	//没有
  	erase();
  	for (var i = 0; i <4; i++) {
@@ -112,15 +191,17 @@ if (checkBottomBorder()) {
  		paintBoard();
  	}
    //产生新图行。并判断是否可以放在最初位置
+
+   var oP=document.getElementById('over');
    if (!genBlock()) {
-   	alert("Game over!")
-   	status=2;
-   	return;
+   	   oP.style.display='block';
+   	   status=2;
+   	   return;
    }
    paint();
    //定时器
    timer=setInterval(moveDown,1000);
-}
+ }
 }
 //左移动
 function moveLeft(){
@@ -171,7 +252,7 @@ for (var i = 0; i < 4; i++) {
 	}
 }		
 erase();
-
+	
 
 for (var i = 0; i < 4; i++) {
 	activeBlock[i].x=tmpBlock[i].x;
@@ -210,7 +291,7 @@ function checkLeftBorder(){
 		if (!isCellValid(activeBlock[i].x,activeBlock[i].y-1)) {
 			return false;
 		}
-		
+			
 	}
 	return true;
 }
@@ -229,14 +310,14 @@ function checkRightBorder(){
 //擦除
 function erase(){
 	for (var i = 0; i <4; i++) {
-		tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="black";
+	tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="#F4A460";
 	}
 }
 //擦除整个面板
 function eraseBoard(){
 	for (var i = 0; i <18; i++) {
 		for (var j = 0; j < 10; j++) {
-			tbl.rows[i].cells[j].style.backgroundColor = "black"; 
+			tbl.rows[i].cells[j].style.backgroundColor = "#F4A460"; 
 		}
 	}
 }
@@ -251,9 +332,9 @@ function generateBlankLine(){
 }
 //消除行,改变数组border
 function updateBoard(){ 
-	for(var i=0; i<4; i++){ 
-		board[activeBlock[i].x][activeBlock[i].y]=1; 
-	} 
+for(var i=0; i<4; i++){ 
+board[activeBlock[i].x][activeBlock[i].y]=1; 
+} 
 } 
 //消除行
 function deleteLine (){
@@ -267,14 +348,14 @@ function deleteLine (){
 		}
 		if (j==10) {
 			lines++
-			if(i!=0) {
+			 if(i!=0) {
 				for (var k =i-1; k>=0; k--) {
 					board[k+1]=board[k];
 				}
 			}
 			board[0]=generateBlankLine();
 
-		}
+	  }
 	}
 	return lines;
 }
@@ -283,17 +364,17 @@ function updateScore(){
 	document.getElementById('score').innerText=""+score;
 }
 //重绘整个面板
-var arrColor=['pink','pink','pink','pink'];
+var arrColor=['#1E90FF','#9A32CD','#6495ED','#7B68EE'];
 var num=0;
 function paintBoard(){
 	for (var i = 0; i <18; i++) {
 		for (var j = 0; j <10; j++) {
-			num++;
-			num%=arrColor.length;
-			if (board[i][j]==1) {
-				tbl.rows[i].cells[j].style.backgroundColor =arrColor[num];
+				num++;
+				num%=arrColor.length;
+				if (board[i][j]==1) {
+					tbl.rows[i].cells[j].style.backgroundColor =arrColor[num];
 				
-			}
+		   }
 		}
 	}
 }
@@ -310,40 +391,45 @@ function keyControl(){
 			break;
 		}
 		case 38:{ 
-			rotate(); 
-			break; 
+		    rotate(); 
+		    break; 
 		} 
 		case 39:{ 
-			moveRight(); 
-			break; 
+		    moveRight(); 
+		    break; 
 		} 
 		case 40:{ 
-			moveDown(); 
-			break; 
+		    moveDown(); 
+		    break; 
 		} 
 	}
 }
 //活动方块
 function paint(){
-	for(var i=0; i<4; i++){ 
-		num++;
+for(var i=0; i<4; i++){ 
+        num++;
 		num%=arrColor.length;
 		tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor=arrColor[num]; 
-		
+	
 
-	} 
+} 
 } 
 //开始
 function begin(e){
 	e.disabled=true;
 	status=1;
 	tbl=document.getElementById('board');
+
+    var oP=document.getElementById('over');
 	if(!genBlock()){ 
-		alert("Game over!"); 
-		status = 2; 
-		return; 
-	} 
+   	   oP.style.display='block';
+       status = 2; 
+       return; 
+} 
 	paint();
 	timer=setInterval(moveDown,1000);
 }
 document.onkeydown=keyControl;
+</script>
+</body>
+</html>
