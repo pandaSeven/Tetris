@@ -416,6 +416,7 @@ for(var i=0; i<4; i++){
 } 
 //开始
 function begin(e){
+	
 	e.disabled=true;
 	status=1;
 	tbl=document.getElementById('board');
@@ -424,10 +425,11 @@ function begin(e){
 	if(!genBlock()){ 
    	   oP.style.display='block';
        status = 2; 
-       return; 
+       return ; 
 } 
 	paint();
 	timer=setInterval(moveDown,1000);
+	return false;
 }
 document.onkeydown=keyControl;
 </script>
