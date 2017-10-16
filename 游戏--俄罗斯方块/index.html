@@ -30,10 +30,17 @@
         	top: 43%;
         	font-size: 30px;
         }
-        div>img{
+        div>input{
+        	display: block;
         	position: absolute;
         	right: 20px;
         	top: 27%;
+        	width: 70px;
+        	height: 30px;
+        	background-color: #eee;
+        	text-align: center;
+        	font-size: 30px;
+        	cursor: pointer;
         }
 	    tbody{
 	    	position: absolute;
@@ -62,7 +69,9 @@
 </head>
 <body>
 <div class="bgImg" id="bgImg">
-<img  value="开始" src="center.png"  onclick="begin(this)"><span id="alls">得分：</span><span id="score"> 0</span>
+<input  value="开始"   onclick="begin(this)">
+<span id="alls">得分：</span>
+<span id="score"> 0</span>
 <p class="over" id="over">游戏结束</p>
 </div>
 <script language="javascript">
@@ -422,6 +431,13 @@ function begin(e){
 	status=1;
 	tbl=document.getElementById('board');
 
+	// preTbl = document.getElementById("preBoard");    
+ //    activeBlock = generateBlock();    
+ //    nextBlock = generateBlock();    
+ //    previewBlock = copyBlock(nextBlock);    
+ //    applyPreview();      
+ //    paintPreview();
+
     var oP=document.getElementById('over');
 	if(!genBlock()){ 
    	   oP.style.display='block';
@@ -432,6 +448,8 @@ function begin(e){
 	timer=setInterval(moveDown,1000);
 }
 document.onkeydown=keyControl;
+    
+
 </script>
 </body>
 </html>
